@@ -1,0 +1,27 @@
+Practice project:
+        - Download and analyze package stats from RStudio, generate tables and save to Postgres
+                  - Pull from postgres with sparkSQL (if possible, see what this actually is), generate summary tables
+                                -Input
+                R log schema:
+                    ["date","time","size","r_version","r_arch","r_os","package","version","country","ip_id"]
+            -Output(s)
+                DB TABLES
+                    PackageCountbyDay
+                        [DATE, PACKAGE_NAME, TOTAL_DOWNLOADS]
+                            Adds new set of rows with each run
+                    PackageCountbyOSVersionbyArchetecturebyDay
+                        [PACKAGE, OS_TYPE, ARCH_TYPE, DATE, TOTAL_DOWNLOADS]
+                    PackageCountbyCountrybyDay
+                        [PACKAGE, COUNTRY, DATE, TOTAL_DOWNLOADS]
+                ANALYSIS_TABLES
+                    tbd
+        X-Setup Git
+        --Figure out simple mappings from sample file
+        --Create V1 datasets from sample file
+        --Create postgres tables[?]
+            -Cassandra might be a better idea
+            -Look up cassandra feasability/ease of querying
+        --Download data
+        --Create mapping scripts
+        --Run Mapreduce
+        --Save output to Postgres/Cassandra directly (if possible)
