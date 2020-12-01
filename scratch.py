@@ -25,7 +25,7 @@ rows = data.map(lambda x: x.split(',')).map(clean_spark_data)
 
 date_freq = rows.map(lambda x: (x[0], 1)).countByKey()
 
-
+print(date_freq)
 
 
 #print(rows.take(5))
