@@ -32,6 +32,7 @@ full_df.persist()
 #Have a look:
 #sql_df.show(10)
 
-full_df.groupBy("package").count().sort("count", ascending = False).show(10)
+full_df.groupBy("package", "r_os").count().sort("count", ascending = False).show(10)
+
 
 
