@@ -1,8 +1,22 @@
+import pandas as pd
 import sys
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import count
+from SQLUtils import SQLUtils
+## Set SQL engine stuff here
+## Create data extraction functions and execute them in the spark context
 
-if __name__ == "__main__":
+##Just turn it into a csv here and come back to do a sql connection
+    ## doesn't look like it's worth it from a compute point of view vs just generating the file
+    ## Test!
+
+sql_engine = SQLUtils()
+music_dat = sql_engine.get(table_name='music_lib_origin')
+
+music_dat.to_csv("music_database.csv")
+
+
+if __name__ == "__main_i_":
 
     ## Check that we've supplied the file path to the csv
     ## Kill the program if it isn't supplied
