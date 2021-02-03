@@ -1,4 +1,4 @@
-from StampPrint import stamp_print
+#from StampPrint import stamp_print
 import os
 import yaml
 import sqlalchemy
