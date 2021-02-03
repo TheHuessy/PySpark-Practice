@@ -50,7 +50,7 @@ class SQLUtils:
     def get(self, table_name, cols=None, limit_value=None, where_col=None, where_value=None, where_equal=None):
         query = self.select_query_builder(table_name=table_name, cols=cols, limit_value=limit_value, where_col=where_col, where_value=where_value, where_equal=where_equal)
 
-        stamp_print(query)
+        print(query)
 
         with SQLEngine() as sql_engine:
             result = pd.read_sql(query, sql_engine.engine)
@@ -60,7 +60,7 @@ class SQLUtils:
     def update(self, table_name, update_col, update_value, where_equal=None, where_col=None, where_value=None):
         query = self.update_query_builder(table_name=table_name, update_col=update_col, update_value=update_value, where_col=where_col, where_value=where_value, where_equal=where_equal)
 
-        stamp_print(query)
+        print(query)
 
         with SQLEngine() as sql_engine:
             result = sql_engine.execute(query)
@@ -71,7 +71,7 @@ class SQLUtils:
     def remove_data(self, table_name, where_col, where_value, where_equal=None):
         query = self.delete_query_builder(table_name=table_name, where_col=where_col, where_value=where_value, where_equal=where_equal)
 
-        stamp_print(query)
+        print(query)
 
         with SQLEngine() as sql_engine:
             result = sql_engine.execute(query)
