@@ -1,8 +1,12 @@
+import os
 import pandas as pd
 import sys
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import count
 from SQLUtils import SQLUtils
+from subprocess import PIPE, Popen
+
+
 ## Set SQL engine stuff here
 ## Create data extraction functions and execute them in the spark context
 
@@ -10,10 +14,27 @@ from SQLUtils import SQLUtils
     ## doesn't look like it's worth it from a compute point of view vs just generating the file
     ## Test!
 
+
+## Write out function to hadoop
+
+def pandas_to_hadoop(data_frame, file_path):
+    ## Save dataframe
+    data_frame.to_csv("temp.csv")
+
+    ## Build hdfs path
+    hdfs_path = os.path.join(os.sep, 'user', 'pi', file_path)
+
+    ## Generate hdfs command
+    put = Popen(["hadoop", "fs", "-put", "temp.csv", hdfs_path], stdin=PIPE, bufsize=-1)
+    ## Execute it
+    put.communicate()
+
+    ## Kill the temp file
+    os.remove("temp.csv")
+
 sql_engine = SQLUtils()
 music_dat = sql_engine.get(table_name='music_lib_origin')
-
-music_dat.to_csv("music_database.csv")
+pandas_to_hadoop(music_dat, "music_database.csv")
 
 
 if __name__ == "__main__":
@@ -24,6 +45,15 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: learning_spark_mm_problem.py [hdfs_filepath_from_user/pi]", file=sys.stderr)
         sys.exit(-1)
+    
+    file_path = sys.argv[1]
+    
+
+    ## Create/update the underlying csv from postgres
+    sql_engine = SQLUtils()
+    music_dat = sql_engine.get(table_name='music_lib_origin')
+    pandas_to_hadoop(music_dat, file_path)
+
 
     ## Start spark SQL session
     spark = (SparkSession.builder.appName("MusicLibCheck").getOrCreate())
