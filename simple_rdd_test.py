@@ -20,4 +20,4 @@ date_freq = rows.map(lambda x: (x[0], 1)).filter(lambda x: x[0] != 'date').count
 
 print(date_freq)
 
-
+sc.stop()
